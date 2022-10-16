@@ -1,7 +1,39 @@
-<section>
-  <h1>Add</h1>
+<section class="form">
+  <h1>Add New Book</h1>
+  <input type="text" placeholder="title"
+    bind:value={book.title}
+  name="title" />
+  <input type="text" placeholder="desc"
+    bind:value={book.desc}
+  name="desc" />
+  <input type="number" placeholder="price"
+    bind:value={book.price}
+  name="price" />
+  <input type="text" placeholder="cover"
+    bind:value={book.cover}
+  name="cover" />
+  <button class="formButton"
+    on:click|preventDefault={handleClick}
+  >Add</button>
 </section>
 
 <script>
-  import { link } from 'svelte-spa-router'
+  import axios from 'axios'
+  import { push } from 'svelte-spa-router'
+
+  const book = {
+    title: '',
+    desc: '',
+    price: null,
+    cover: '',
+  }
+
+  const handleClick = async () => {
+    try{
+      await axios.post("http://localhost:8800/books", book)
+      push('/')
+    }catch(err){
+      console.log(err)
+    }
+  }
 </script>
